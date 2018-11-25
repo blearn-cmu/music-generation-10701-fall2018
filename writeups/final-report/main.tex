@@ -57,7 +57,15 @@
 \maketitle
 
 
+\begin{abstract}
+  % TODO add real abstract text
+  A brief overview of our project.
+\end{abstract}
+
+
 \section{Introduction}
+
+% TODO taken from Proposal, revise text
 
 Although similar to text generation in many respects, there is still significant progress to be made in the area of music generation. There are a few distinctions between the problem of music generation and text generation that affect this. The number of potential states that a standard 88-key piano can take greatly exceeds the number of words in any language. Another difference that is present in music generation is the concept of tempo, which adds even more complexity to the number of representations that generated music can take in comparison to generated text.
 
@@ -65,24 +73,58 @@ Previous rule-based models of generation are now being outperformed thanks to th
 
 
 \section{Related Work}
+
+% TODO taken from Proposal, revise text
+
 In the MidiNet paper, Yang et al. created a CNN-GAN based model for MIDI generation [3]. They propose that their model could be possibly expanded to generate multiple tracks. This was demonstrated in the work done by MuseGAN. However, as pointed out in the MusicVAE paper, MuseGAN works with a fixed set of instruments, namely bass, drums, guitar, piano, and strings [2]. Instead, MusicVAE is capable of modeling exactly three broad classes of instruments which it calls the “trio:” melody, bass, and drums. This provides more flexibility on what instruments can be assigned in track generation. However, it also introduces chord conditioning to keep harmony fixed.
 
 Another related work in multiple track generation is from Chu et al. in their “Song from PI” RNN. Although PI is capable of producing multiple tracks, they also conditioned the generation on scale types to help pick up regularities in their dataset of pop songs [1]. In our work, we hope to produce multiple tracks without relying on prior knowledge of music theory in the model.
 
 
-\section{Proposed Work}
-We will explore the possibilities of creating music generation models that can learn specific types of instrument classes without being explicitly defined. As we plan to do this within the Magenta project framework, the representation used to train and generate musical content will be MIDI files with single and multiple tracks. Furthermore, we will leave it as a task for the models to learn the underlying chord structures instead of explicitly conditioning the music generation on music theory concepts. We will compare models based on both a Recurrent Neural Network (RNN) and a Variational Autoencoder (VAE) to see if there are any significant differences in performance on this task. Since generating melody has already been targeted in previous work, examples of other instrument classes to train on may include: drums, bass, and chords.
+\section{Methods}
 
-After focusing on generation of a second track, if time permits, we will expand our work to a third track which can then be generalized to any number of tracks. Another important thing to consider is the interdependence of tracks. As discussed in ``Song from PI'', one approach is to assume that tracks are independent given a melody. An alternative approach is to learn a third track given a second track and a melody. Again, we would like to explore all the options and compare the results.
+% TODO add methods
+
+% - describe what work you have completed towards creating a method or pipeline which improves on the baseline.
+% - What is your motivation behind these techniques
+%   --(you are highly encouraged to come up with an original idea of your own rather than simply implementing or applying an existing ML algorithm)
+% - Use math/figure to explain your approach, when possible (do not use a lot of space on page)
 
 
-\section{Preliminary Results}
+\section{Dataset}
 
-As an initial evaluation of music complexity and aesthetic from the related works, small batches of samples were generated from three different models. We compared pre-trained models released by Google Magenta: MeldoyRNN \verb|basic_rnn|, MusicVAE \verb|mel_16bar|, and MusicVAE \verb|trio_16bar|. We evaluated the generated samples by comparing the visual representations and listening to the samples.
+% TODO add dataset info
 
-The most complex samples came from the MusicVAE trio model although it relies on chord conditioning while the others do not. This was the only model that generates multiple tracks. It will be interesting to see if we can generate sequences that are comparably complex without chord conditioning. The samples generated from the MelodyRNN model were more simplistic compared to the output of both MusicVAE models. It is still to be determined if this will be the case when multiple tracks are generated.
+% - Note we do not use the dataset provided by them (classical piano).
+
+
+\section{Experiments and Results}
+
+% TODO add experiments/results
+
+% - Show plots of the performance of your algorithms and interpret what they mean
+%   --Be sure to label and explain this clearly
+% - What do the results imply about your methods?
+% - How did you set up your experiments?
+% - What are your baselines?
+% - What metrics did you use for evaluation?
+%   --How do your results compare to prior work?
+% - Describe how the current results in each of the experiments align with your expectations
+
+
+\section{Conclusion and Future Work}
+
+% TODO add conclusion
+
+% - what you accomplished and what would be the future direction for this project
+% - Analyze your model and results
+% - Highlight a few limitations of your approach (assumptions made, pitfalls, caveats, etc.)
+% - Comment on whether you think there is a way to further improve your method to eliminate these limitations
+
 
 \section*{References}
+
+% TODO needs updated for final report references
 
 \small
 
