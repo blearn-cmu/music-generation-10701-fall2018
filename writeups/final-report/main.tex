@@ -77,7 +77,7 @@ Previous rule-based models of generation are now being outperformed thanks to th
 
 % TODO taken from Proposal, revise text
 
-In the MidiNet paper, Yang et al. created a CNN-GAN based model for MIDI generation [3]. They propose that their model could be possibly expanded to generate multiple tracks. This was demonstrated in the work done by MuseGAN. However, as pointed out in the MusicVAE paper, MuseGAN works with a fixed set of instruments, namely bass, drums, guitar, piano, and strings [2]. Instead, MusicVAE is capable of modeling exactly three broad classes of instruments which it calls the “trio:” melody, bass, and drums. This provides more flexibility on what instruments can be assigned in track generation. However, it also introduces chord conditioning to keep harmony fixed.
+In the MidiNet paper, Yang et al. created a CNN-GAN based model for MIDI generation [4]. They propose that their model could be possibly expanded to generate multiple tracks. This was demonstrated in the work done by MuseGAN. However, as pointed out in the MusicVAE paper, MuseGAN works with a fixed set of instruments, namely bass, drums, guitar, piano, and strings [3]. Instead, MusicVAE is capable of modeling exactly three broad classes of instruments which it calls the “trio:” melody, bass, and drums. This provides more flexibility on what instruments can be assigned in track generation. However, it also introduces chord conditioning to keep harmony fixed.
 
 Another related work in multiple track generation is from Chu et al. in their “Song from PI” RNN. Although PI is capable of producing multiple tracks, they also conditioned the generation on scale types to help pick up regularities in their dataset of pop songs [1]. In our work, we hope to produce multiple tracks without relying on prior knowledge of music theory in the model.
 
@@ -94,10 +94,11 @@ Another related work in multiple track generation is from Chu et al. in their �
 
 \section{Dataset}
 
-% TODO add dataset info
+% TODO elaborate on why classical piano would not suffice (not enough tracks to train on and lack of consistent voices)
+% TODO mention comparison on dataset size? (classical piano seems much smaller than NES-MDB)
+% TODO mention other artifacts in MIDI files that are being ignored (all the Control_c events)
 
-% - Note we do not use the dataset provided by them (classical piano).
-% - "make sure you describe clearly the dataset you use in your poster and final report"
+For our work, it was necessary to have access to a dataset of MIDI files which had consistent track types across the entire dataset. To accomplish this, we used the NES Music Database (NES-MDB) as presented by Donahue et al. [2]. The dataset consists of 5,278 songs from the soundtracks of 397 NES games. Each MIDI file consists of four instrument voices, each mapping to an NES synthesizer. These voices are two pulse-wave generators (P1, P2), a triangle-wave generator (TR), and a percussive noise generator (NO). Since these voices are consistent throughout all files in the dataset, we assumed that each voice represented a specific track type. For example, the percurssive noise generator would be a drum track for all MIDI files in which it is defined.
 
 
 \section{Experiments and Results}
@@ -132,8 +133,10 @@ Another related work in multiple track generation is from Chu et al. in their �
 
 [1] Chu, Hang, et al. ``Song From PI: A Musically Plausible Network for Pop Music Generation.'' {\it [1611.03477] Song From PI: A Musically Plausible Network for Pop Music Generation,} 10 Nov. 2016, arxiv.org/abs/1611.03477.
 
-[2] Simon, Ian, et al. ``Learning a Latent Space of Multitrack Measures.'' {\it[1806.00195] Learning a Latent Space of Multitrack Measures,} 1 June 2018, arxiv.org/abs/1806.00195.
+[2] Donahue, Chris et al. ``The NES Music Database: A multi-instrumental dataset with expressive performance attributes'' {\it [1806.04278] The NES Music Database: A multi-instrumental dataset with expressive performance attributes,} 12 June 2018, arxiv.org/abs/1806.04278.
 
-[3] Yang, Li-Chia, et al. ``MidiNet: A Convolutional Generative Adversarial Network for Symbolic-Domain Music Generation.'' {\it[1703.10847] MidiNet: A Convolutional Generative Adversarial Network for Symbolic-Domain Music Generation,} 18 July 2017, arxiv.org/abs/1703.10847.
+[3] Simon, Ian, et al. ``Learning a Latent Space of Multitrack Measures.'' {\it[1806.00195] Learning a Latent Space of Multitrack Measures,} 1 June 2018, arxiv.org/abs/1806.00195.
+
+[4] Yang, Li-Chia, et al. ``MidiNet: A Convolutional Generative Adversarial Network for Symbolic-Domain Music Generation.'' {\it[1703.10847] MidiNet: A Convolutional Generative Adversarial Network for Symbolic-Domain Music Generation,} 18 July 2017, arxiv.org/abs/1703.10847.
 
 \end{document}
