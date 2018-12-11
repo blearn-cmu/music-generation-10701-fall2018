@@ -27,8 +27,7 @@
 \usepackage{microtype}      % microtypography
 \usepackage{graphicx}       % include graphics
 
-% TODO change title
-\title{Untitled Project}
+\title{Analysis of Generating Isolated Tracks from NES Music}
 
 % The \author macro works with any number of authors. There are two
 % commands used to separate the names and addresses of multiple
@@ -85,23 +84,25 @@ In the MidiNet paper, Yang et al. created a CNN-GAN based model for MIDI generat
 Another related work in multiple track generation is from Chu et al. in their “Song from PI” RNN. Although PI is capable of producing multiple tracks, they also conditioned the generation on scale types to help pick up regularities in their dataset of pop songs [1]. In our work, we hope to produce multiple tracks without relying on prior knowledge of music theory in the model.
 
 
-\section{Methods}
-
-% TODO add methods
-
-% - describe what work you have completed towards creating a method or pipeline which improves on the baseline.
-% - What is your motivation behind these techniques
-%   --(you are highly encouraged to come up with an original idea of your own rather than simply implementing or applying an existing ML algorithm)
-% - Use math/figure to explain your approach, when possible (do not use a lot of space on page)
-
-
 \section{Dataset}
 
 % TODO elaborate on why classical piano would not suffice (not enough tracks to train on and lack of consistent voices)
 % TODO mention comparison on dataset size? (classical piano seems much smaller than NES-MDB)
 % TODO mention other artifacts in MIDI files that are being ignored (all the Control_c events)
 
+% TODO taken from Poster, revise text
 For our work, it was necessary to have access to a dataset of MIDI files which had consistent track types across the entire dataset. To accomplish this, we used the NES Music Database (NES-MDB) as presented by Donahue et al. [2]. The dataset consists of 5,278 songs from the soundtracks of 397 NES games. Each MIDI file consists of four instrument voices, each mapping to an NES synthesizer. These voices are two pulse-wave generators (P1, P2), a triangle-wave generator (TR), and a percussive noise generator (NO). Since these voices are consistent throughout all files in the dataset, we assumed that each voice represented a specific track type. For example, the percussive noise generator would be a drum track for all MIDI files in which it is defined.
+
+
+\section{Methods}
+
+% - describe what work you have completed towards creating a method or pipeline which improves on the baseline.
+% - What is your motivation behind these techniques
+%   --(you are highly encouraged to come up with an original idea of your own rather than simply implementing or applying an existing ML algorithm)
+% - Use math/figure to explain your approach, when possible (do not use a lot of space on page)
+
+% TODO taken from Poster, revise text
+To train on specific voices, we modified the original MIDI dataset to generate four single-track datasets for each of the four tracks present (P1, P2, TR, NO). This was achieved using the midicsv and csvmidi tools developed by John Walker. By converting the MIDI files to CSV format, we were able to automate the process of extracting single tracks from each file in the dataset. Then we passed each of the modified single-track datasets through the MelodyRNN and MusicVAE pipeline. For both MelodyRNN and MusicVAE, the first step is to build a note sequences (.tfrecord) file which can be read in by most of the Magenta models. It is also worth noting that the isolated drums track (NO) had to be modified further to properly train on the MelodyRNN model. As per the General MIDI standard, the channel specified by NO (channel 9) was dedicated to percussion, and the first step taken by MelodyRNN was to remove this track. To resolve this, we simply modified our script for NO to also modify the track’s MIDI channel.
 
 
 \section{Experiments}
