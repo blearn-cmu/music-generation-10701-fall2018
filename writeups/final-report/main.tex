@@ -67,6 +67,9 @@
 \section{Introduction}
 
 % TODO taken from Proposal, revise text
+% - What are you trying to solve
+% - Why is it important?
+% - It should have a thorough and clear explanation of what’s at stake, and in a well-formulated (e.g. mathematically) format
 
 Although similar to text generation in many respects, there is still significant progress to be made in the area of music generation. There are a few distinctions between the problem of music generation and text generation that affect this. The number of potential states that a standard 88-key piano can take greatly exceeds the number of words in any language. Another difference that is present in music generation is the concept of tempo, which adds even more complexity to the number of representations that generated music can take in comparison to generated text.
 
@@ -98,12 +101,10 @@ Another related work in multiple track generation is from Chu et al. in their �
 % TODO mention comparison on dataset size? (classical piano seems much smaller than NES-MDB)
 % TODO mention other artifacts in MIDI files that are being ignored (all the Control_c events)
 
-For our work, it was necessary to have access to a dataset of MIDI files which had consistent track types across the entire dataset. To accomplish this, we used the NES Music Database (NES-MDB) as presented by Donahue et al. [2]. The dataset consists of 5,278 songs from the soundtracks of 397 NES games. Each MIDI file consists of four instrument voices, each mapping to an NES synthesizer. These voices are two pulse-wave generators (P1, P2), a triangle-wave generator (TR), and a percussive noise generator (NO). Since these voices are consistent throughout all files in the dataset, we assumed that each voice represented a specific track type. For example, the percurssive noise generator would be a drum track for all MIDI files in which it is defined.
+For our work, it was necessary to have access to a dataset of MIDI files which had consistent track types across the entire dataset. To accomplish this, we used the NES Music Database (NES-MDB) as presented by Donahue et al. [2]. The dataset consists of 5,278 songs from the soundtracks of 397 NES games. Each MIDI file consists of four instrument voices, each mapping to an NES synthesizer. These voices are two pulse-wave generators (P1, P2), a triangle-wave generator (TR), and a percussive noise generator (NO). Since these voices are consistent throughout all files in the dataset, we assumed that each voice represented a specific track type. For example, the percussive noise generator would be a drum track for all MIDI files in which it is defined.
 
 
-\section{Experiments and Results}
-
-% TODO add experiments/results
+\section{Experiments}
 
 % - Show plots of the performance of your algorithms and interpret what they mean
 %   --Be sure to label and explain this clearly
@@ -113,6 +114,33 @@ For our work, it was necessary to have access to a dataset of MIDI files which h
 % - What metrics did you use for evaluation?
 %   --How do your results compare to prior work?
 % - Describe how the current results in each of the experiments align with your expectations
+
+Since our interests lie in learning individual voice classes, we used models trained on the original dataset as well as models trained on the four individual voice classes (P1, P2, TR, and NO). This allowed us to audibly compare differences in what the baseline model learned to what our voice-specific models learned. Also, for RNN, we compared our isolated track models to the baseline model from their calculated training losses.
+
+\subsection{Training the Baseline}
+We wanted a baseline comparison for the two Magenta models that we considered (MusicVAE and MelodyRNN). To accomplish this, we trained with the original NES-MDB Dataset with all four voices. For the MusicVAE baseline we used the Trio configuration, where “trio” refers to an ensemble of three performers or voices. MusicVAE’s trio consists of melody, bass, and drums, and it uses chord conditioning to keep harmony fixed. We also trained the MelodyRNN baseline model, but the MelodyRNN configuration only produces one melody in contrast to the trio.
+
+\subsection{Isolated Track Training}
+We trained both the MusicVAE model and the MelodyRNN model on each of the four isolated tracks for a total of 8 track-separated models. The models were trained on the Bridges environment provided by the Pittsburgh Supercomputing Center using a mixture of regular memory nodes and GPU nodes. Each model was trained up to 8 hours. The MelodyRNN models that were trained for 8 hours were overfitting. To address this we compared the performance of earlier versions of the models to the overfit models by evaluating test loss.
+
+When training drums for MelodyRNN, we learned that the basic MelodyRNN configuration ignored all information from the MIDI channel associated with percussion. For learning drums, a separate model exists in the project (DrumsRNN). However, our training indicated that training percussion on DrumsRNN only produced one note value despite having multiple percussive note values in the training data. We successfully preserved this information in the training by modifying the MIDI files in our NO dataset to use a non-percussive MIDI channel and training with MelodyRNN.
+
+% TODO mention/include figure comparing DrumRNN, MeodyRNN
+
+\subsection{Generated Tracks}
+After generating the isolated tracks, we were interested in converting the generated MIDI files into synthesized NES tracks. As part of the NES-MDB project, there is a tool for converting MIDI files from the dataset into audio files generated from synthesized track voices. However, we learned that the generated format from the models was not enough to generate synthesized voices. This is because the original dataset included control event information to produce more expressive voices, and this information was not generated as output from our models.
+
+
+\section{Results}
+
+We evaluated the trained models by listening to the generated music and comparing the training loss across model types. For MelodyRNN, the training loss trend for each isolated track was less than the training loss for the baseline model. The graph for training loss in the MusicVAE model only includes models which trained beyond the initial checkpoint (P1, P2, TR). When considering the number of isolated tracks that were learned, the RNN models outperform the VAE models. The MusicVAE baseline and percussive track (NO) never went beyond the initial checkpoint in its training. This resulted in the models generating mostly random noise <INCLUDE FIGURE OF WHITE CHRISTMAS>. For MusicVAE, it is interesting that training never went beyond the initial checkpoint for all training data that included percussion. Even when modifying the files to use a non-percussive MIDI channel type, the MusicVAE model failed to train beyond its initial checkpoint.
+
+% TODO add figure for reference to MusicVAE White Christmas
+
+An additional evaluation on the generated music indicated that the RNN models produced better results than the VAE models. These results were surprising as our preliminary results seemed to indicate that the MusicVAE model was capable of generating more interesting melodies. This prior analysis was based on pre-trained models provided by the Magenta project, and the data which produced these pre-trained models is not documented. The shortcomings of the results of the VAE models could possibly be the result of a lack of data or allocated time for training.
+
+% TODO We will definitely want to reference the musicVAE paper where they explain they used ~1.5midi files to train
+% TODO might want to explain why VAE has less checkpoints
 
 
 \section{Conclusion and Future Work}
@@ -144,4 +172,3 @@ This work used the Bridges system, which is supported by NSF award number ACI-14
 [4] Yang, Li-Chia, et al. ``MidiNet: A Convolutional Generative Adversarial Network for Symbolic-Domain Music Generation.'' {\it[1703.10847] MidiNet: A Convolutional Generative Adversarial Network for Symbolic-Domain Music Generation,} 18 July 2017, arxiv.org/abs/1703.10847.
 
 \end{document}
-
