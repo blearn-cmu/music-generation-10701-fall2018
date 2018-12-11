@@ -86,12 +86,14 @@ Another related work in multiple track generation is from Chu et al. in their â€
 
 \section{Dataset}
 
-% TODO elaborate on why classical piano would not suffice (not enough tracks to train on and lack of consistent voices)
-% TODO mention comparison on dataset size? (classical piano seems much smaller than NES-MDB)
-% TODO mention other artifacts in MIDI files that are being ignored (all the Control_c events)
+The suggested input data for the music generation project topic was classical piano music pieces from the website www.piano-midi.de. We ultimately decided against this dataset because of its lack of well-defined tracks and sparse variety of instrument voices across all MIDI files. On top of this, the classical piano dataset was relatively small (less than 1,000 MIDI files).
+
+% TODO segue?
 
 % TODO taken from Poster, revise text
 For our work, it was necessary to have access to a dataset of MIDI files which had consistent track types across the entire dataset. To accomplish this, we used the NES Music Database (NES-MDB) as presented by Donahue et al. [2]. The dataset consists of 5,278 songs from the soundtracks of 397 NES games. Each MIDI file consists of four instrument voices, each mapping to an NES synthesizer. These voices are two pulse-wave generators (P1, P2), a triangle-wave generator (TR), and a percussive noise generator (NO). Since these voices are consistent throughout all files in the dataset, we assumed that each voice represented a specific track type. For example, the percussive noise generator would be a drum track for all MIDI files in which it is defined.
+
+% TODO mention other artifacts in MIDI files that are being ignored (all the Control_c events)
 
 
 \section{Methods}
@@ -110,11 +112,6 @@ To train on specific voices, we modified the original MIDI dataset to generate f
 % - Show plots of the performance of your algorithms and interpret what they mean
 %   --Be sure to label and explain this clearly
 % - What do the results imply about your methods?
-% - How did you set up your experiments?
-% - What are your baselines?
-% - What metrics did you use for evaluation?
-%   --How do your results compare to prior work?
-% - Describe how the current results in each of the experiments align with your expectations
 
 Since our interests lie in learning individual voice classes, we used models trained on the original dataset as well as models trained on the four individual voice classes (P1, P2, TR, and NO). This allowed us to audibly compare differences in what the baseline model learned to what our voice-specific models learned. Also, for RNN, we compared our isolated track models to the baseline model from their calculated training losses.
 
