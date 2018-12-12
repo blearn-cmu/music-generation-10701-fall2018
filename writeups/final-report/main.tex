@@ -41,12 +41,12 @@
 
 \author{
   Bryan Learn\\
-  10-701\\
+  blearn@andrew.cmu.edu\\
   Carnegie Mellon University\\
   Pittsburgh, PA 15213\\
   \And
   Mike Tasota\\
-  10-701\\
+  tasota@andrew.cmu.edu\\
   Carnegie Mellon University\\
   Pittsburgh, PA 15213\\
 }
@@ -124,6 +124,18 @@ We trained both the MusicVAE model and the MelodyRNN model on each of the four i
 When training drums for MelodyRNN, we learned that the basic MelodyRNN configuration ignored all information from the MIDI channel associated with percussion. For learning drums, a separate model exists in the project (DrumsRNN). However, our training indicated that training percussion on DrumsRNN only produced one note value despite having multiple percussive note values in the training data. We successfully preserved this information in the training by modifying the MIDI files in our NO dataset to use a non-percussive MIDI channel and training with MelodyRNN.
 
 % TODO mention/include figure comparing DrumRNN, MeodyRNN
+\begin{figure}[htb!]
+  \begin{minipage}{0.48\textwidth}
+    \centering
+    \includegraphics[height=4cm, width=4cm]{img/DrumRNN_drum.jpg}
+    \caption{DrumRNN: percussive track}
+  \end{minipage}\hfill
+  \begin{minipage}{0.48\textwidth}
+    \centering
+    \includegraphics[height=4cm, width=4cm]{img/MelodyRNN_drum.jpg}
+    \caption{MelodyRNN: percussive track}
+  \end{minipage}
+\end{figure}
 
 \subsection{Generated Tracks}
 After generating the isolated tracks, we were interested in converting the generated MIDI files into synthesized NES tracks. As part of the NES-MDB project, there is a tool for converting MIDI files from the dataset into audio files generated from synthesized track voices. However, we learned that the generated format from the models was not enough to generate synthesized voices. This is because the original dataset included control event information to produce more expressive voices, and this information was not generated as output from our models.
@@ -134,6 +146,13 @@ After generating the isolated tracks, we were interested in converting the gener
 We evaluated the trained models by listening to the generated music and comparing the training loss across model types. For MelodyRNN, the training loss trend for each isolated track was less than the training loss for the baseline model. The graph for training loss in the MusicVAE model only includes models which trained beyond the initial checkpoint (P1, P2, TR). When considering the number of isolated tracks that were learned, the RNN models outperform the VAE models. The MusicVAE baseline and percussive track (NO) never went beyond the initial checkpoint in its training. This resulted in the models generating mostly random noise <INCLUDE FIGURE OF WHITE CHRISTMAS>. For MusicVAE, it is interesting that training never went beyond the initial checkpoint for all training data that included percussion. Even when modifying the files to use a non-percussive MIDI channel type, the MusicVAE model failed to train beyond its initial checkpoint.
 
 % TODO add figure for reference to MusicVAE White Christmas
+\begin{figure}[htb!]
+  \begin{minipage}{1.0\textwidth}
+    \centering
+    \includegraphics[height=4cm, width=4cm]{img/vae_no.jpg}
+    \caption{MusicVAE: percussive track}
+  \end{minipage}
+\end{figure}
 
 An additional evaluation on the generated music indicated that the RNN models produced better results than the VAE models. These results were surprising as our preliminary results seemed to indicate that the MusicVAE model was capable of generating more interesting melodies. This prior analysis was based on pre-trained models provided by the Magenta project, and the data which produced these pre-trained models is not documented. The shortcomings of the results of the VAE models could possibly be the result of a lack of data or allocated time for training.
 
