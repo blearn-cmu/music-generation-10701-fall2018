@@ -74,7 +74,7 @@ But music is much more than just playing a combination of frequencies over an in
 \section{Related Work}
 
 
-In the MidiNet paper, Yang et al. created a CNN-GAN based model for MIDI generation [4]. They propose that their model could be possibly expanded to generate multiple tracks. This was demonstrated in the work done by MuseGAN. However, MuseGAN works with a fixed set of instruments, namely bass, drums, guitar, piano, and strings. Another related work in multiple track generation is from Chu et al. in their “Song from PI” RNN. Although it is capable of producing multiple tracks, it also conditioned the generation on scale types to help pick up regularities in their dataset [1].
+In the MidiNet paper, Yang et al. created a CNN-GAN based model for MIDI generation [4]. They propose that their model could be possibly expanded to generate multiple tracks. This was demonstrated in the work done by MuseGAN. However, MuseGAN works with a fixed set of instruments, namely bass, drums, guitar, piano, and strings. Another related work in multiple track generation is from Chu et al. in their "Song from PI" RNN. Although it is capable of producing multiple tracks, it also conditioned the generation on scale types to help pick up regularities in their dataset [1].
 
 \subsection{Magenta}
 
@@ -99,12 +99,12 @@ It is also worth noting that the dataset with the isolated drums track (NO) had 
 Since our interests lie in learning individual voice classes, we used models trained on the original dataset as well as models trained on the four individual voice classes (P1, P2, TR, and NO). This allowed us to audibly compare differences in what the baseline model learned to what our voice-specific models learned. Also, for RNN, we compared our isolated track models to the baseline model from their calculated training losses.
 
 \subsection{Training the Baseline}
-We wanted a baseline comparison for the two Magenta models that we considered (MusicVAE and MelodyRNN). To accomplish this, we trained with the original NES-MDB Dataset with all four voices. For the MusicVAE baseline we used the Trio configuration, where “trio” refers to an ensemble of three performers or voices. MusicVAE’s trio consists of melody, bass, and drums, and it uses chord conditioning to keep harmony fixed. We also trained the MelodyRNN baseline model, but the MelodyRNN configuration only produces one melody in contrast to the trio.
+We wanted a baseline comparison for the two Magenta models that we considered (MusicVAE and MelodyRNN). To accomplish this, we trained with the original NES-MDB Dataset with all four voices. For the MusicVAE baseline we used the Trio configuration, where "trio" refers to an ensemble of three performers or voices. MusicVAE’s trio consists of melody, bass, and drums, and it uses chord conditioning to keep harmony fixed. We also trained the MelodyRNN baseline model, but the MelodyRNN configuration only produces one melody in contrast to the trio.
 
 \subsection{Isolated Track Training}
 We trained both the MusicVAE model and the MelodyRNN model on each of the four isolated tracks to create a total of 8 track-separated models. Each model was trained up to 8 hours. We noticed the MelodyRNN models that were trained for 8 hours were overfitting. To address this, we compared the performance of earlier versions of the models to the overfit models by evaluating test loss.
 
-When training drums for MelodyRNN, we learned that the basic MelodyRNN configuration ignored all information from the MIDI channel associated with percussion. For learning drums, a separate model exists in the Magenta project (DrumsRNN). However, our training indicated that training percussion on DrumsRNN only produces one note value despite having multiple percussive note values in the training data. We successfully preserved this information in the training by modifying the MIDI files in our NO dataset to use a non-percussive MIDI channel and training with MelodyRNN. This can also be seen in Figure 4, where “no” indicates DrumsRNN and “no2” indicates MelodyRNN.
+When training drums for MelodyRNN, we learned that the basic MelodyRNN configuration ignored all information from the MIDI channel associated with percussion. For learning drums, a separate model exists in the Magenta project (DrumsRNN). However, our training indicated that training percussion on DrumsRNN only produces one note value despite having multiple percussive note values in the training data. We successfully preserved this information in the training by modifying the MIDI files in our NO dataset to use a non-percussive MIDI channel and training with MelodyRNN. This can also be seen in Figure 4, where "no" indicates DrumsRNN and "no2" indicates MelodyRNN.
 
 
 \begin{figure}[htb!]
@@ -176,13 +176,13 @@ For automating the process of isolating the tracks, we use the midicsv and csvmi
 
 \small
 
-[1] Chu, Hang, et al. ``Song From PI: A Musically Plausible Network for Pop Music Generation.'' {\it [1611.03477] Song From PI: A Musically Plausible Network for Pop Music Generation,} 10 Nov. 2016, arxiv.org/abs/1611.03477.
+[1] Chu, Hang, et al. "Song From PI: A Musically Plausible Network for Pop Music Generation." {\it [1611.03477] Song From PI: A Musically Plausible Network for Pop Music Generation,} 10 Nov. 2016, arxiv.org/abs/1611.03477.
 
-[2] Donahue, Chris et al. ``The NES Music Database: A multi-instrumental dataset with expressive performance attributes'' {\it [1806.04278] The NES Music Database: A multi-instrumental dataset with expressive performance attributes,} 12 June 2018, arxiv.org/abs/1806.04278.
+[2] Donahue, Chris et al. "The NES Music Database: A multi-instrumental dataset with expressive performance attributes" {\it [1806.04278] The NES Music Database: A multi-instrumental dataset with expressive performance attributes,} 12 June 2018, arxiv.org/abs/1806.04278.
 
-[3] Engel, Jesse, et al. ``Latent Constraints: Learning to Generate Conditionally from Unconditional Generative Models.'' {\it[1711.05772] Latent Constraints: Learning to Generate Conditionally from Unconditional Generative Models.,} 21 Dec 2017, arxiv.org/abs/1711.05772
+[3] Engel, Jesse, et al. "Latent Constraints: Learning to Generate Conditionally from Unconditional Generative Models." {\it[1711.05772] Latent Constraints: Learning to Generate Conditionally from Unconditional Generative Models.,} 21 Dec 2017, arxiv.org/abs/1711.05772
 
-[4] Yang, Li-Chia, et al. ``MidiNet: A Convolutional Generative Adversarial Network for Symbolic-Domain Music Generation.'' {\it[1703.10847] MidiNet: A Convolutional Generative Adversarial Network for Symbolic-Domain Music Generation,} 18 July 2017, arxiv.org/abs/1703.10847.
+[4] Yang, Li-Chia, et al. "MidiNet: A Convolutional Generative Adversarial Network for Symbolic-Domain Music Generation." {\it[1703.10847] MidiNet: A Convolutional Generative Adversarial Network for Symbolic-Domain Music Generation,} 18 July 2017, arxiv.org/abs/1703.10847.
 
 
 \end{document}
