@@ -79,7 +79,7 @@ In the MidiNet paper, Yang et al. created a CNN-GAN based model for MIDI generat
 
 \subsection{Magenta}
 
-In our work, we explored learning isolated tracks by using the deep learning models in the Magenta project. Magenta is a research project from the Google Brain team that explores the role of machine learning in creating art and music. Utilizing the TensorFlow library, Magenta publishes its deep learning models for other researchers to use. For our work, we focused on two of the learning models. MelodyRNN implements melody generation using Long Short-Term Memory (LSTM) cells inside of a Recurrent Neural Network. MusicVAE is a hierarchical recurrent variational autoencoder which learns a latent space of musical sequences.
+In our work, we explored learning isolated tracks by using the deep learning models in the Magenta project. Magenta is a research project from the Google Brain team that explores the role of machine learning in creating art and music. Utilizing the TensorFlow library, Magenta publishes its deep learning models for other researchers to use. For our work, we focused on two of the learning models. MelodyRNN implements melody generation using long short-term memory (LSTM) cells inside of a recurrent neural network. MusicVAE is a hierarchical recurrent variational autoencoder which learns a latent space of musical sequences.
 
 
 \section{Dataset}
@@ -138,7 +138,7 @@ We evaluated the trained models by listening to the generated music and comparin
   \end{minipage}
 \end{figure}
 
-An additional evaluation on the generated music indicated that the RNN models produced better results than the VAE models. These results were surprising as our preliminary results seemed to indicate that the MusicVAE model was capable of generating more interesting melodies. This prior analysis was based on pre-trained models provided by the Magenta project. For the MusicVAE model, the training set consisted of over 1.5 million MIDI files scraped over the web <REFERENCE>. Compared to the size of the NES-MDB dataset, it is likely that the shortcomings of our results for the VAE models were from a lack of training data.
+An additional evaluation on the generated music indicated that the RNN models produced better results than the VAE models. These results were surprising as our preliminary results seemed to indicate that the MusicVAE model was capable of generating more interesting melodies. This prior analysis was based on pre-trained models provided by the Magenta project. For the MusicVAE model, the training set consisted of over 1.5 million MIDI files scraped over the web [3]. Compared to the size of the NES-MDB dataset, it is likely that the shortcomings of our results for the VAE models were from a lack of training data.
 
 \begin{figure}[htb!]
   \begin{minipage}{0.48\textwidth}
@@ -159,12 +159,7 @@ An additional evaluation on the generated music indicated that the RNN models pr
 
 \section{Conclusion and Future Work}
 
-% TODO add conclusion
-
-% - what you accomplished and what would be the future direction for this project
-% - Analyze your model and results
-% - Highlight a few limitations of your approach (assumptions made, pitfalls, caveats, etc.)
-% - Comment on whether you think there is a way to further improve your method to eliminate these limitations
+Our experiments indicate that a recurrent neural network model performed the task of learning isolated tracks from the NES-MDB dataset better than a variational autoencoder model. We would expect this result to hold for any dataset of similar size, but it is still to be determined if similar results would follow in a larger dataset (100,000 or 1 million files) that share the same set of instrument classes. In the future, we would like to see an extension of the MelodyRNN model that is capable of generating MIDI control change events and any other information necessary to render synthesized audio in the NES Music Database format. Extending the model to also generate multiple tracks within a single MIDI file (such as the trio for MusicVAE, minus the chord conditioning) also seems attainable.
 
 \section{Acknowledgements}
 We thank our project mentor, Jing Mao, for assistance.\\
@@ -173,16 +168,15 @@ This work used the Bridges system, which is supported by NSF award number ACI-14
 
 \section*{References}
 
-% TODO needs updated for final report references
-
 \small
 
 [1] Chu, Hang, et al. ``Song From PI: A Musically Plausible Network for Pop Music Generation.'' {\it [1611.03477] Song From PI: A Musically Plausible Network for Pop Music Generation,} 10 Nov. 2016, arxiv.org/abs/1611.03477.
 
 [2] Donahue, Chris et al. ``The NES Music Database: A multi-instrumental dataset with expressive performance attributes'' {\it [1806.04278] The NES Music Database: A multi-instrumental dataset with expressive performance attributes,} 12 June 2018, arxiv.org/abs/1806.04278.
 
-[3] Simon, Ian, et al. ``Learning a Latent Space of Multitrack Measures.'' {\it[1806.00195] Learning a Latent Space of Multitrack Measures,} 1 June 2018, arxiv.org/abs/1806.00195.
+[3] Engel, Jesse, et al. ``Latent Constraints: Learning to Generate Conditionally from Unconditional Generative Models.'' {\it[1711.05772] Latent Constraints: Learning to Generate Conditionally from Unconditional Generative Models.,} 21 Dec 2017, arxiv.org/abs/1711.05772
 
 [4] Yang, Li-Chia, et al. ``MidiNet: A Convolutional Generative Adversarial Network for Symbolic-Domain Music Generation.'' {\it[1703.10847] MidiNet: A Convolutional Generative Adversarial Network for Symbolic-Domain Music Generation,} 18 July 2017, arxiv.org/abs/1703.10847.
+
 
 \end{document}
