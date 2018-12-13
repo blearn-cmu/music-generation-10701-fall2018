@@ -58,8 +58,7 @@
 
 
 \begin{abstract}
-  % TODO add real abstract text
-  A brief overview of our project.
+By using a dataset based on the Nintendo audio synthesizer with well-defined noise and wave generators, we were able to automate the process of training models on isolated tracks to learn note structure without conditioning on specific MIDI channels or instruments. Models from the Magenta project were used for training and generating music. With a dataset of approximately five thousand songs, our results indicated that the recurrent neural network model was more successful than the variational autoencoder model in generating note sequences on the isolated tracks. Our work has also suggested reasons for preferring the MelodyRNN model over the DrumsRNN model when learning isolated percussive tracks.
 \end{abstract}
 
 
@@ -108,7 +107,6 @@ We trained both the MusicVAE model and the MelodyRNN model on each of the four i
 When training drums for MelodyRNN, we learned that the basic MelodyRNN configuration ignored all information from the MIDI channel associated with percussion. For learning drums, a separate model exists in the Magenta project (DrumsRNN). However, our training indicated that training percussion on DrumsRNN only produces one note value despite having multiple percussive note values in the training data. We successfully preserved this information in the training by modifying the MIDI files in our NO dataset to use a non-percussive MIDI channel and training with MelodyRNN.
 
 
-% TODO mention/include figure comparing DrumRNN, MeodyRNN
 \begin{figure}[htb!]
   \begin{minipage}{0.48\textwidth}
     \centering
@@ -153,8 +151,13 @@ An additional evaluation on the generated music indicated that the RNN models pr
   \end{minipage}
 \end{figure}
 
-% TODO We will definitely want to reference the musicVAE paper where they explain they used ~1.5midi files to train
-% TODO might want to explain why VAE has less checkpoints
+\begin{figure}[htb!]
+  \begin{minipage}{1.0\textwidth}
+    \centering
+    \includegraphics[height=4cm, width=6cm]{img/generated-tracks.png}
+    \caption{Top row: MelodyRNN; Bottom row: MusicVAE}
+  \end{minipage}
+\end{figure}
 
 
 \section{Conclusion and Future Work}
@@ -162,9 +165,11 @@ An additional evaluation on the generated music indicated that the RNN models pr
 Our experiments indicate that a recurrent neural network model performed the task of learning isolated tracks from the NES-MDB dataset better than a variational autoencoder model. We would expect this result to hold for any dataset of similar size, but it is still to be determined if similar results would follow in a larger dataset (100,000 or 1 million files) that share the same set of instrument classes. In the future, we would like to see an extension of the MelodyRNN model that is capable of generating MIDI control change events and any other information necessary to render synthesized audio in the NES Music Database format. Extending the model to also generate multiple tracks within a single MIDI file (such as the trio for MusicVAE, minus the chord conditioning) also seems attainable.
 
 \section{Acknowledgements}
-We thank our project mentor, Jing Mao, for assistance.\\
-
 This work used the Bridges system, which is supported by NSF award number ACI-1445606, at the Pittsburgh Supercomputing Center (PSC).
+
+We thank our project mentor Jing Mao for guidance, along with Daniel Bird and the rest of the teaching assistants.
+
+For automating the process of isolating the tracks, we use the midicsv and csvmidi programs authored by John Walker. We implore the curious researcher to visit his website (www.fourmilab.ch)
 
 \section*{References}
 
